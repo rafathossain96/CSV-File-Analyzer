@@ -1,0 +1,3 @@
+Run from CMD - Admin
+
+python -m eel main.py web --onedir --name='' --icon=''

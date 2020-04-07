@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>CSV Analyzer | v1.0</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/csv.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+</head>
+
+<body>
+	<div class="contact1" id="donePage" style="position: absolute; z-index: 2;" hidden>
+		<div class="container-contact1 text-center">
+			<div class="col-sm-12">
+				<img src="images/icons/csv.png" alt="IMG" width="15%">
+				<br><br>
+				<h3><b>Your CSV File is Ready!</b></h3>
+				<br><br>
+				<h4>It is saved in the <b>Output</b> Folder of this project directory</h4>
+				<br><br>
+				<h3>File name: <span id="fileName"></span></h3>
+			</div>
+		</div>
+	</div>
+	<div class="contact1" id="report" style="position: absolute; z-index: 3;" hidden>
+		<div class="container-contact2 text-center">
+			<div class="row">
+				<div class="col-sm-12">
+					<img src="images/icons/csv.png" alt="IMG" width="15%">
+					<br><br>
+					<h3><b>Analyzed CSV Report</b></h3>
+					<br><br>
+					<div class="row">
+						<div class="col-sm-6">
+							<table class="table table-bordered" style="width: 100%;">
+								<thead style="background: #363636; color: #FFFFFF;">
+									<tr>
+										<th class="text-center" colspan="3">Data Report</th>
+									</tr>
+								</thead>
+								<tbody id="generalReport">
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-6">
+							<form id="actionForm">
+								<table class="table table-bordered" style="width: 100%;">
+									<thead style="background: #363636; color: #FFFFFF;">
+										<tr>
+											<th class="text-center" colspan="4">User Action</th>
+										</tr>
+									</thead>
+									<tbody id="userAction">
+										<tr>
+											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
+											<th class="text-center">Title</th>
+											<th class="text-center" style="background: #BDD7EE;">Keep</th>
+											<th class="text-center" style="background: #BDD7EE;">Remove</th>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+							<button class="btn btn-secondary" onclick="formSerialization()">Start Cleansing</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12" style="padding: 0 !important;">
+					<br><br>
+					<h3><b>Data Map</b></h3>
+					<br><br>
+					<table style="width: 100% !important;">
+						<tbody id="duplicate">
+						</tbody>
+						<tr height="5"></tr>
+						<tbody id="missRate">
+						</tbody>
+						<tr height="5"></tr>
+						<tbody id="dataMap">
+						</tbody>
+					</table>
+				</div>
+				<div class="col-sm-12">
+					<br><br>
+					<div class="row">
+						<div class="col-sm-1" style="background: #00B0F0; height: 20px;"></div>
+						<div class="col-sm-3 text-left">Column with Same Header</div>
+
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1" style="background: #000099; height: 20px;"></div>
+						<div class="col-sm-2 text-left">Has Value</div>
+
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1" style="background: #FFFF00; height: 20px;"></div>
+						<div class="col-sm-2 text-left">Empty</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="contact1" id="loadingPage1" style="position: absolute; z-index: 3;" hidden>
+		<div class="container-contact1 text-center">
+			<div class="col-sm-12">
+				<img src="images/icons/csv.png" alt="IMG" width="15%">
+				<br><br>
+				<h3><b>Analyzing CSV File</b></h3>
+				<img src="images/gif/Copper-Loader.gif" alt="IMG" width="30%">
+				<br><br>
+				<small>Software Version v1.0</small>
+			</div>
+		</div>
+	</div>
+	<div class="contact1" id="csvForm" style="position: absolute; z-index: 4;">
+		<div class="container-contact1">
+			<div class="contact1-pic js-tilt" data-tilt>
+				<img src="images/icons/csv.png" alt="IMG">
+			</div>
+
+			<form class="contact1-form validate-form">
+				<span class="contact1-form-title">
+					Select Your CSV File
+				</span>
+
+				<div class="wrap-input1 validate-input">
+					<input type="text" name="filePath" id="filePath" style="display: none;" value="" />
+					<input class="input1" type="text" name="file_path" id="file_path" placeholder="File Path"
+						disabled />
+					<span class="shadow-input1"></span>
+				</div>
+
+				<div class="container-contact1-form-btn">
+					<button type="button" class="contact2-form-btn" onclick="getPathToFile()">
+						<span>
+							Select CSV File
+						</span>
+					</button>
+				</div>
+
+				<br>
+
+				<div class="container-contact1-form-btn">
+					<button type="button" class="contact1-form-btn" onclick="startAnalyze()">
+						<span>
+							Start Analyzing
+							<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="contact1" id="loading" style="position: absolute; z-index: 5;">
+		<div class="container-contact1 text-center">
+			<div class="col-sm-12">
+				<img src="images/icons/csv.png" alt="IMG" width="15%">
+				<br><br>
+				<h3><b>Welcome to CSV Analyzer</b></h3>
+				<img src="images/gif/Copper-Loader.gif" alt="IMG" width="30%">
+				<br><br><br><br>
+				<small>Developed by Rafat Hossain</small>
+				<br>
+				<small>Software Version v1.0</small>
+			</div>
+		</div>
+	</div>
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script>
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" src="/eel.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/preset.js"></script>
+	<script src="js/controller.js"></script>
+</body>
+
+</html>
