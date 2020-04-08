@@ -1,4 +1,10 @@
 var missingArray;
+var duplicateHeader;
+var singleValue;
+var sameColumn;
+var duplicateRowsCount;
+var incompleteRowsCount;
+
 
 function getPathToFile() {
     eel.pythonFunction()(
@@ -116,6 +122,7 @@ function processData(response) {
     $("#missRate").append(markup);
 
     duplicateHeaderArray = response['duplicateHeaderArray'];
+    duplicateHeader = duplicateHeaderArray;
 
     for (var item = 0; item < duplicateHeaderArray.length; item++) {
         // if (item == 0) {
@@ -137,6 +144,7 @@ function processData(response) {
     // $("#userAction").append(markup);
 
     singleValueColumnArray = response['singleValueColumnArray'];
+    singleValue = singleValueColumnArray;
 
     for (var item = 0; item < singleValueColumnArray.length; item++) {
         // if (item == 0) {
@@ -181,6 +189,7 @@ function processData(response) {
     // $("#userAction").append(markup);
 
     columnsHavingSameValueArray = response['columnsHavingSameValueArray'];
+    sameColumn = columnsHavingSameValueArray;
 
     for (var item = 0; item < columnsHavingSameValueArray.length; item++) {
         // if (item == 0) {
@@ -200,6 +209,9 @@ function processData(response) {
 
     // markup = '<tr><td colspan="4"></td></tr>';
     // $("#userAction").append(markup);
+
+    duplicateRowsCount = response['Duplicate Rows'];
+    incompleteRowsCount = response['Incomplete Rows'];
 
     markup = '<tr><td class="text-center">Duplicate Rows</td>';
     markup += '<td class="text-center">' + response['Duplicate Rows'] + '</td><td class="text-center">';
@@ -249,21 +261,142 @@ function processData(response) {
         $('#userActions').DataTable({
             paging: true
         });
-    }, 3000);
+    }, 1000);
 }
 
 function regenrateMissing(){
+    $('#userActions').DataTable().clear().destroy();
+    $("#loadingPage1").removeAttr("hidden");
+    $("#report").attr("hidden", true);
+    $("#userAction").html("");
+
     missingVal = $("#missingVal").val();
-    for (var item = 0; item < missingArray.length; item++) {
-        var res = missingArray[item].split(",");
-        if (res[1] > missingVal){
-            $('input[name=MISSING' + res[0] + item + '][value=' + res[0] + 'REMOVE]').prop("checked", true);
-        }
-            // markup = '<tr><td class="text-center">Missing Data</td>';
-            // markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
-            // markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
-            // markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
+
+    // for (var item = 0; item < missingArray.length; item++) {
+    //     var res = missingArray[item].split(",");
+    //     if (res[1] > missingVal){
+    //         $('input[name=MISSING' + res[0] + item + '][value=' + res[0] + 'REMOVE]').prop("checked", true);
+    //     }
+    //         // markup = '<tr><td class="text-center">Missing Data</td>';
+    //         // markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+    //         // markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
+    //         // markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
+    // }
+
+
+    duplicateHeaderArray = duplicateHeader;
+
+    for (var item = 0; item < duplicateHeaderArray.length; item++) {
+        // if (item == 0) {
+        //     markup = '<tr><td class="text-center" rowspan="' + duplicateHeaderArray.length + '">Duplicate Headers</td>';
+        //     markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+        //     markup += '<div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" value="' + duplicateHeaderArray[item] + 'KEEP"></div></td>';
+        //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" checked value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
+        //     $("#userAction").append(markup);
+        // } else {
+            markup = '<tr><td class="text-center">Duplicate Headers</td>';
+            markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+            markup += '<div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'KEEP" checked></div></td>';
+            markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
+            $("#userAction").append(markup);
+        // }
     }
+
+    // markup = '<tr><td colspan="4"></td></tr>';
+    // $("#userAction").append(markup);
+
+    singleValueColumnArray = singleValue;
+
+    for (var item = 0; item < singleValueColumnArray.length; item++) {
+        // if (item == 0) {
+        //     markup = '<tr><td class="text-center" rowspan="' + singleValueColumnArray.length + '">Single Value Column</td>';
+        //     markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+        //     markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP"></div></td>';
+        //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" checked value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
+        //     $("#userAction").append(markup);
+        // } else {
+            markup = '<tr><td class="text-center">Single Value Column</td>';
+            markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+            markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP" checked></div></td>';
+            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
+            $("#userAction").append(markup);
+        // }
+    }
+
+    // markup = '<tr><td colspan="4"></td></tr>';
+    // $("#userAction").append(markup);
+
+    anyValueMissingColumnArray = missingArray;
+
+    for (var item = 0; item < anyValueMissingColumnArray.length; item++) {
+        var res = anyValueMissingColumnArray[item].split(",");
+        // if (item == 0) {
+        //     markup = '<tr><td class="text-center" rowspan="' + anyValueMissingColumnArray.length + '">Missing Data</td>';
+        //     markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+        //     markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
+        //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
+        //     $("#userAction").append(markup);
+        // } else {
+            if(parseFloat(res[1]) > parseFloat(missingVal)){
+                markup = '<tr><td class="text-center">Missing Data</td>';
+                markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+                markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
+                markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE" checked></div></td></tr>';
+            } else {
+                markup = '<tr><td class="text-center">Missing Data</td>';
+                markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+                markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP" checked></div></td>';
+                markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
+            }
+            $("#userAction").append(markup);
+        // }
+    }
+
+    // markup = '<tr><td colspan="4"></td></tr>';
+    // $("#userAction").append(markup);
+
+    columnsHavingSameValueArray = sameColumn;
+
+    for (var item = 0; item < columnsHavingSameValueArray.length; item++) {
+        // if (item == 0) {
+        //     markup = '<tr><td class="text-center" rowspan="' + columnsHavingSameValueArray.length + '">Columns with Same Value</td>';
+        //     markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+        //     markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP"></div></td>';
+        //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" checked value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
+        //     $("#userAction").append(markup);
+        // } else {
+            markup = '<tr><td class="text-center">Columns with Same Value</td>';
+            markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+            markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP" checked></div></td>';
+            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
+            $("#userAction").append(markup);
+        // }
+    }
+
+    // markup = '<tr><td colspan="4"></td></tr>';
+    // $("#userAction").append(markup);
+
+    markup = '<tr><td class="text-center">Duplicate Rows</td>';
+    markup += '<td class="text-center">' + duplicateRowsCount + '</td><td class="text-center">';
+    markup += '<div class="radio"><input type="radio" name="DR" value="DR_KEEP" checked></div></td>';
+    markup += '<td class="text-center"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
+    $("#userAction").append(markup);
+
+    markup = '<tr><td class="text-center">Incomplete Rows</td>';
+    markup += '<td class="text-center">' + incompleteRowsCount + '</td><td class="text-center">';
+    markup += '<div class="radio"><input type="radio" name="IR" value="IR_KEEP" checked></div></td>';
+    markup += '<td class="text-center"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
+    $("#userAction").append(markup);
+
+    $("#report").removeAttr("hidden");
+    $("#loadingPage1").fadeTo("slow", 0);
+    $("#loadingPage1").attr("hidden", true);
+
+    setTimeout(function () {
+        $('#userActions').DataTable({
+            paging: true
+        });
+    }, 1000);
 }
 
 function formSerialization() {
