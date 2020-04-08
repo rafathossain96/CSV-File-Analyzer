@@ -20,6 +20,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 	<!--===============================================================================================-->
 </head>
 
@@ -57,24 +58,35 @@
 								</tbody>
 							</table>
 						</div>
+						<!-- style="height: 550px !important; overflow-y: auto;" -->
 						<div class="col-sm-6">
 							<form id="actionForm">
-								<table class="table table-bordered" style="width: 100%;">
+								<table id="userActions" class="table table-bordered" style="width: 95%;">
 									<thead style="background: #363636; color: #FFFFFF;">
 										<tr>
-											<th class="text-center" colspan="4">User Action</th>
-										</tr>
-									</thead>
-									<tbody id="userAction">
-										<tr>
 											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
-											<th class="text-center">Title</th>
+											<th class="text-center" style="width: 50%;">Title</th>
 											<th class="text-center" style="background: #BDD7EE;">Keep</th>
 											<th class="text-center" style="background: #BDD7EE;">Remove</th>
 										</tr>
+										<!-- <tr>
+											<th class="text-center" colspan="4">User Action</th>
+										</tr> -->
+									</thead>
+									<tbody id="userAction">
+										<!-- <tr>
+											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
+											<th class="text-center" style="width: 50%;">Title</th>
+											<th class="text-center" style="background: #BDD7EE;">Keep</th>
+											<th class="text-center" style="background: #BDD7EE;">Remove</th>
+										</tr> -->
 									</tbody>
 								</table>
 							</form>
+						</div>
+						<div class="col-sm-6"></div>
+						<div class="col-sm-6">
+							<br><br>
 							<button class="btn btn-secondary" onclick="formSerialization()">Start Cleansing</button>
 						</div>
 					</div>
@@ -83,16 +95,18 @@
 					<br><br>
 					<h3><b>Data Map</b></h3>
 					<br><br>
-					<table style="width: 100% !important;">
-						<tbody id="duplicate">
-						</tbody>
-						<tr height="5"></tr>
-						<tbody id="missRate">
-						</tbody>
-						<tr height="5"></tr>
-						<tbody id="dataMap">
-						</tbody>
-					</table>
+					<div style="height: 500px !important; overflow-y: scroll;">
+						<table style="width: 100% !important;">
+							<tbody id="duplicate">
+							</tbody>
+							<tr height="5"></tr>
+							<tbody id="missRate">
+							</tbody>
+							<tr height="5"></tr>
+							<tbody id="dataMap">
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="col-sm-12">
 					<br><br>
@@ -187,6 +201,7 @@
 	<script src="vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script>
 		$('.js-tilt').tilt({
 			scale: 1.1
