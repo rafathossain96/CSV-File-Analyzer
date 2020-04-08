@@ -25,7 +25,7 @@
 </head>
 
 <body>
-	<div class="contact1" id="donePage" style="position: absolute; z-index: 2;" hidden>
+	<div class="contact1" id="donePage" style="position: absolute; z-index: 1;" hidden>
 		<div class="container-contact1 text-center">
 			<div class="col-sm-12">
 				<img src="images/icons/csv.png" alt="IMG" width="15%">
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="contact1" id="report" style="position: absolute; z-index: 3;" hidden>
+	<div class="contact1" id="report" style="position: absolute; z-index: 2;" hidden>
 		<div class="container-contact2 text-center">
 			<div class="row">
 				<div class="col-sm-12">
@@ -61,6 +61,18 @@
 						<!-- style="height: 550px !important; overflow-y: auto;" -->
 						<div class="col-sm-6">
 							<form id="actionForm">
+								<div class="row" style="width: 95%;">
+									<div class="col-sm-7" style="padding-top: 10px;">
+										<h6>Columns with missing rate (%) > </h6>
+									</div>
+									<div class="col-sm-3">
+										<input type="text" id="missingVal" width="100%" class="form-control" value="0">
+									</div>
+									<div class="col-sm-2">
+										<button type="button" class="btn btn-primary" onclick="regenrateMissing()">Select</button>
+									</div>
+									<br><br><br>
+								</div>
 								<table id="userActions" class="table table-bordered" style="width: 95%;">
 									<thead style="background: #363636; color: #FFFFFF;">
 										<tr>
@@ -201,7 +213,8 @@
 	<script src="vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js">
+	</script>
 	<script>
 		$('.js-tilt').tilt({
 			scale: 1.1
