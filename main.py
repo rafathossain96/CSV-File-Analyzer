@@ -167,6 +167,8 @@ def startAnalyze(csv_path):
 def startCleansing(actions):
 	global dataFrame
 
+	# print(actions)
+
 	allActions = actions.split("&")
 	for item in allActions:
 		if item[:4] == "SAME":
@@ -180,11 +182,12 @@ def startCleansing(actions):
 
 	for item in allActions:
 		if item[:7] == "MISSING":
+			# print(item)
 			if item[-4:] != "KEEP":
 				print("Remove missing data column")
 				splitItem = item.split('=')[1]
 				splitItem = splitItem[:-6]
-				# print(splitItem)
+				print(splitItem)
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
 

@@ -25,7 +25,9 @@ def startAnalyze(csv_path):
 	singleValueColumn = singleValueColumnList[singleValueColumnList == 1]
 	# anyValueMissingRowsByColumnName = dataFrame[anyValueMissingColumn[0]]
 	columnList = pd.DataFrame(dataFrameNoHead.head(1))
-	duplicateHeaderNames = [(i, j) for i, j in combinations(columnList, 2) if columnList[i].equals(columnList[j])][0]
+	duplicateHeaderNames = [(i, j) for i, j in combinations(columnList, 2) if columnList[i].equals(columnList[j])]
+	if len(duplicateHeaderNames) > 0:
+		duplicateHeaderNames = duplicateHeaderNames[0]
 	duplicateRows = dataFrame[dataFrame.duplicated()]
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
@@ -103,6 +105,7 @@ def startAnalyze(csv_path):
 
 def startCleansing(actions):
 	global dataFrame
+	print(actions)
 	allActions = actions.split("&")
 	for item in allActions:
 		if item[:4] == "SAME":
@@ -164,6 +167,6 @@ def startCleansing(actions):
 
 if __name__ == '__main__':
 	startAnalyze(
-		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV Data Analyzer - Peter - PPH\\Sample Data\\data_sample - Copy.csv")
+		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV File Analyzer - Peter - PPH\\Sample Data\\100020538804062020091021.csv")
 	startCleansing(
 		"DUPLICATEsn_120=sn_12REMOVE&DUPLICATE1=sn_12.1KEEP&SINGLEsn_70=sn_7REMOVE&SINGLEsn_101=sn_10REMOVE&MISSINGsn_20=sn_2REMOVE&MISSINGsn_31=sn_3REMOVE&MISSINGsn_52=sn_5REMOVE&MISSINGsn_73=sn_7REMOVE&MISSINGsn_84=sn_8REMOVE&MISSINGsn_95=sn_9REMOVE&MISSINGsn_106=sn_10REMOVE&MISSINGsn_127=sn_12REMOVE&MISSINGsn_12.18=sn_12.1REMOVE&MISSINGsn_139=sn_13REMOVE&MISSINGsn_1610=sn_16REMOVE&SAMEsn_40=sn_4REMOVE&SAMEsn_141=sn_14REMOVE&DR=DR_REMOVE&IR=IR_REMOVE")
