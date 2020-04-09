@@ -169,25 +169,16 @@ def startCleansing(actions):
 
 	allActions = actions.split("&")
 	for item in allActions:
-		if item[:2] == "IR":
-			if item[-4:] != "KEEP":
-				print("Remove incomplete rows")
-				dataFrame = dataFrame.dropna()
-
-		if item[:2] == "DR":
-			if item[-4:] != "KEEP":
-				# print("Remove duplicate rows")
-				dataFrame = dataFrame.drop_duplicates(keep=False)
-
 		if item[:4] == "SAME":
 			if item[-4:] != "KEEP":
-				# print("Remove columns with same value")
+				print("Remove columns with same value")
 				splitItem = item.split('=')[1]
 				splitItem = splitItem[:-6]
 				# print(splitItem)
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
 
+	for item in allActions:
 		if item[:7] == "MISSING":
 			if item[-4:] != "KEEP":
 				print("Remove missing data column")
@@ -197,23 +188,37 @@ def startCleansing(actions):
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
 
+	for item in allActions:
 		if item[:6] == "SINGLE":
 			if item[-4:] != "KEEP":
 				print("Remove single value column")
 				splitItem = item.split('=')[1]
 				splitItem = splitItem[:-6]
-				# print(splitItem)
+				print(splitItem)
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
 
+	for item in allActions:
 		if item[:9] == "DUPLICATE":
 			if item[-4:] != "KEEP":
 				print("Remove duplicate column name")
 				splitItem = item.split('=')[1]
 				splitItem = splitItem[:-6]
-				# print(splitItem)
+				print(splitItem)
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
+
+	for item in allActions:
+		if item[:2] == "IR":
+			if item[-4:] != "KEEP":
+				print("Remove incomplete rows")
+				dataFrame = dataFrame.dropna()
+
+	for item in allActions:
+		if item[:2] == "DR":
+			if item[-4:] != "KEEP":
+				print("Remove duplicate rows")
+				dataFrame = dataFrame.drop_duplicates(keep=False)
 
 	if not os.path.exists('Output'):
 		os.mkdir('Output')
