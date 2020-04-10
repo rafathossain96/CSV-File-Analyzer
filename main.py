@@ -221,7 +221,7 @@ def startCleansing(actions):
 		if item[:2] == "DR":
 			if item[-4:] != "KEEP":
 				print("Remove duplicate rows")
-				dataFrame = dataFrame.drop_duplicates(keep=False)
+				dataFrame = dataFrame.drop_duplicates(keep='first')
 
 	if not os.path.exists('Output'):
 		os.mkdir('Output')
