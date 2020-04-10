@@ -32,9 +32,12 @@ def startAnalyze(csv_path):
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
 	anyValueMissingRow = len(anyValueMissingRow.axes[0])
-	columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
-	if len(columnsHavingSameValue) > 0:
-		columnsHavingSameValue = columnsHavingSameValue[0]
+	columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
+	columnsHavingSameValue = list(columnsHavingSameValue.head(0))
+	# print(columnsHavingSameValue)
+	# columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
+	# if len(columnsHavingSameValue) > 0:
+	# 	columnsHavingSameValue = columnsHavingSameValue[0]
 	print("Columns: " + str(columns) + "\nRows: " + str(rows) + "\nEmpty Cells: " + str(
 		emptyCellsCount) + "\nMissing Rate: " + str(missingRate) + "%" + "\nFull Empty Columns: " + str(
 		len(fullEmptyColumns)) + "\nDuplicated Header: " + str(
@@ -100,6 +103,27 @@ def startAnalyze(csv_path):
 				break
 	# print(missingMapping)
 
+	# print(date_finder(csv_path))
+	# print(list(dataFrame.filter(regex='date_time')))
+	# print(list(dataFrame.filter(regex='date')))
+	# print(list(dataFrame.filter(regex='time')))
+	# print(list(dataFrame.filter(regex='Date')))
+	# print(list(dataFrame.filter(regex='Time')))
+	# print(list(dataFrame.filter(regex='DATE')))
+	# print(list(dataFrame.filter(regex='TIME')))
+	# print(list(dataFrame.filter(regex='DATE_TIME')))
+	# print(list(dataFrame.filter(regex='Date_Time')))
+
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date_time')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='time')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Time')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='TIME')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE_TIME')))]
+	# dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date_Time')))]
+
 	return "Data Received"
 
 
@@ -119,11 +143,12 @@ def startCleansing(actions):
 
 	for item in allActions:
 		if item[:7] == "MISSING":
+			# print(item)
 			if item[-4:] != "KEEP":
 				print("Remove missing data column")
 				splitItem = item.split('=')[1]
 				splitItem = splitItem[:-6]
-				# print(splitItem)
+				print(splitItem)
 				if splitItem in dataFrame.columns:
 					dataFrame.drop(splitItem, axis=1, inplace=True)
 
@@ -157,7 +182,17 @@ def startCleansing(actions):
 		if item[:2] == "DR":
 			if item[-4:] != "KEEP":
 				print("Remove duplicate rows")
-				dataFrame = dataFrame.drop_duplicates(keep=False)
+				dataFrame = dataFrame.drop_duplicates(keep='first')
+
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date_time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='TIME')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE_TIME')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date_Time')))]
 
 	if not os.path.exists('Output'):
 		os.mkdir('Output')
@@ -167,6 +202,6 @@ def startCleansing(actions):
 
 if __name__ == '__main__':
 	startAnalyze(
-		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV File Analyzer - Peter - PPH\\Sample Data\\100020538804062020091021.csv")
-	startCleansing(
-		"DUPLICATEsn_120=sn_12REMOVE&DUPLICATE1=sn_12.1KEEP&SINGLEsn_70=sn_7REMOVE&SINGLEsn_101=sn_10REMOVE&MISSINGsn_20=sn_2REMOVE&MISSINGsn_31=sn_3REMOVE&MISSINGsn_52=sn_5REMOVE&MISSINGsn_73=sn_7REMOVE&MISSINGsn_84=sn_8REMOVE&MISSINGsn_95=sn_9REMOVE&MISSINGsn_106=sn_10REMOVE&MISSINGsn_127=sn_12REMOVE&MISSINGsn_12.18=sn_12.1REMOVE&MISSINGsn_139=sn_13REMOVE&MISSINGsn_1610=sn_16REMOVE&SAMEsn_40=sn_4REMOVE&SAMEsn_141=sn_14REMOVE&DR=DR_REMOVE&IR=IR_REMOVE")
+		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV File Analyzer - Peter - PPH\\Sample Data\\100020538804102020083157.csv")
+	# startCleansing(
+	# 	"DUPLICATEsn_120=sn_12REMOVE&DUPLICATE1=sn_12.1KEEP&SINGLEsn_70=sn_7REMOVE&SINGLEsn_101=sn_10REMOVE&MISSINGsn_20=sn_2REMOVE&MISSINGsn_31=sn_3REMOVE&MISSINGsn_52=sn_5REMOVE&MISSINGsn_73=sn_7REMOVE&MISSINGsn_84=sn_8REMOVE&MISSINGsn_95=sn_9REMOVE&MISSINGsn_106=sn_10REMOVE&MISSINGsn_127=sn_12REMOVE&MISSINGsn_12.18=sn_12.1REMOVE&MISSINGsn_139=sn_13REMOVE&MISSINGsn_1610=sn_16REMOVE&SAMEsn_40=sn_4REMOVE&SAMEsn_141=sn_14REMOVE&DR=DR_REMOVE&IR=IR_REMOVE")

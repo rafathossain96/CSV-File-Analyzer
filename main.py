@@ -72,9 +72,12 @@ def startAnalyze(csv_path):
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
 	anyValueMissingRow = len(anyValueMissingRow.axes[0])
-	columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
-	if len(columnsHavingSameValue) > 0:
-		columnsHavingSameValue = columnsHavingSameValue[0]
+	columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
+	columnsHavingSameValue = list(columnsHavingSameValue.head(0))
+	# print(columnsHavingSameValue)
+	# columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
+	# if len(columnsHavingSameValue) > 0:
+	# 	columnsHavingSameValue = columnsHavingSameValue[0]
 	print("Columns: " + str(columns) + "\nRows: " + str(rows) + "\nEmpty Cells: " + str(
 		emptyCellsCount) + "\nMissing Rate: " + str(missingRate) + "%" + "\nFull Empty Columns: " + str(
 		len(fullEmptyColumns)) + "\nDuplicated Header: " + str(
@@ -222,6 +225,16 @@ def startCleansing(actions):
 			if item[-4:] != "KEEP":
 				print("Remove duplicate rows")
 				dataFrame = dataFrame.drop_duplicates(keep='first')
+
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date_time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='date')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Time')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='TIME')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='DATE_TIME')))]
+	dataFrame = dataFrame[dataFrame.columns.drop(list(dataFrame.filter(regex='Date_Time')))]
 
 	if not os.path.exists('Output'):
 		os.mkdir('Output')
