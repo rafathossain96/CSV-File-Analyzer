@@ -4,6 +4,7 @@ var singleValue;
 var sameColumn;
 var duplicateRowsCount;
 var incompleteRowsCount;
+var table;
 
 
 function getPathToFile() {
@@ -132,12 +133,12 @@ function processData(response) {
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" checked value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Duplicate Headers</td>';
-            markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Headers</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + duplicateHeaderArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -155,12 +156,12 @@ function processData(response) {
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" checked value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Single Value Column</td>';
-            markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Single Value Column</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + singleValueColumnArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -179,12 +180,12 @@ function processData(response) {
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Missing Data</td>';
-            markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Missing Data</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -202,12 +203,12 @@ function processData(response) {
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" checked value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Columns with Same Value</td>';
-            markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Columns with Same Value</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + columnsHavingSameValueArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -217,54 +218,26 @@ function processData(response) {
     duplicateRowsCount = response['Duplicate Rows'];
     incompleteRowsCount = response['Incomplete Rows'];
 
-    markup = '<tr><td class="text-center">Duplicate Rows</td>';
-    markup += '<td class="text-center">' + response['Duplicate Rows'] + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + response['Duplicate Rows'] + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="DR" value="DR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
-    markup = '<tr><td class="text-center">Incomplete Rows</td>';
-    markup += '<td class="text-center">' + response['Incomplete Rows'] + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Incomplete Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + response['Incomplete Rows'] + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="IR" value="IR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
-
-    // <tr>
-    //     <td class="text-center" rowspan="4">Quality Issue</td>
-    //     <td class="text-center">Title</td>
-    //     <td class="text-center">
-    //         <div class="radio">
-    //             <input type="radio" name="optradio1">
-    // 									</div>
-    // 								</td>
-    //         <td class="text-center">
-    //             <div class="radio">
-    //                 <input type="radio" name="optradio1" checked>
-    // 									</div>
-    // 								</td>
-    // 							</tr>
-    //         <tr>
-    //             <td class="text-center">Title</td>
-    //             <td class="text-center">
-    //                 <div class="radio">
-    //                     <input type="radio" name="optradio2">
-    // 									</div>
-    // 								</td>
-    //                 <td class="text-center">
-    //                     <div class="radio">
-    //                         <input type="radio" name="optradio2" checked>
-    // 									</div>
-    // 								</td>
-    // 							</tr>
+    // $("#userActionDummy").append(markup);
 
     $("#report").removeAttr("hidden");
     $("#loadingPage1").fadeTo("slow", 0);
     $("#loadingPage1").attr("hidden", true);
     
     setTimeout(function () {
-        $('#userActions').DataTable({
+        table = $('#userActions').DataTable({
             paging: true
         });
     }, 1000);
@@ -275,21 +248,9 @@ function regenrateMissing(){
     $("#loadingPage1").removeAttr("hidden");
     $("#report").attr("hidden", true);
     $("#userAction").html("");
-    $("#userActionDummy").html("");
+    // $("#userActionDummy").html("");
 
     missingVal = $("#missingVal").val();
-
-    // for (var item = 0; item < missingArray.length; item++) {
-    //     var res = missingArray[item].split(",");
-    //     if (res[1] > missingVal){
-    //         $('input[name=MISSING' + res[0] + item + '][value=' + res[0] + 'REMOVE]').prop("checked", true);
-    //     }
-    //         // markup = '<tr><td class="text-center">Missing Data</td>';
-    //         // markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
-    //         // markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
-    //         // markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
-    // }
-
 
     duplicateHeaderArray = duplicateHeader;
 
@@ -301,12 +262,12 @@ function regenrateMissing(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" checked value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Duplicate Headers</td>';
-            markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Headers</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + duplicateHeaderArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -323,12 +284,12 @@ function regenrateMissing(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" checked value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Single Value Column</td>';
-            markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Single Value Column</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + singleValueColumnArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -347,18 +308,18 @@ function regenrateMissing(){
         //     $("#userAction").append(markup);
         // } else {
             if(parseFloat(res[1]) > parseFloat(missingVal)){
-                markup = '<tr><td class="text-center">Missing Data</td>';
-                markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+                markup = '<tr><td class="text-center" style="width: 20%;">Missing Data</td>';
+                markup += '<td class="text-center" style="width: 50%;">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center" style="width: 15%;">';
                 markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
-                markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE" checked></div></td></tr>';
+                markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE" checked></div></td></tr>';
             } else {
-                markup = '<tr><td class="text-center">Missing Data</td>';
-                markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+                markup = '<tr><td class="text-center" style="width: 20%;">Missing Data</td>';
+                markup += '<td class="text-center" style="width: 50%;">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center" style="width: 15%;">';
                 markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP" checked></div></td>';
-                markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
+                markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
             }
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -375,38 +336,38 @@ function regenrateMissing(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" checked value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Columns with Same Value</td>';
-            markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Columns with Same Value</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + columnsHavingSameValueArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
     // markup = '<tr><td colspan="4"></td></tr>';
     // $("#userAction").append(markup);
 
-    markup = '<tr><td class="text-center">Duplicate Rows</td>';
-    markup += '<td class="text-center">' + duplicateRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + duplicateRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="DR" value="DR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
-    markup = '<tr><td class="text-center">Incomplete Rows</td>';
-    markup += '<td class="text-center">' + incompleteRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Incomplete Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + incompleteRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="IR" value="IR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
     $("#report").removeAttr("hidden");
     $("#loadingPage1").fadeTo("slow", 0);
     $("#loadingPage1").attr("hidden", true);
 
     setTimeout(function () {
-        $('#userActions').DataTable({
+        table = $('#userActions').DataTable({
             paging: true
         });
     }, 1000);
@@ -417,7 +378,7 @@ function keepAll(){
     $("#loadingPage1").removeAttr("hidden");
     $("#report").attr("hidden", true);
     $("#userAction").html("");
-    $("#userActionDummy").html("");
+    // $("#userActionDummy").html("");
 
     duplicateHeaderArray = duplicateHeader;
 
@@ -429,12 +390,12 @@ function keepAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" checked value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Duplicate Headers</td>';
-            markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Headers</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + duplicateHeaderArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -451,12 +412,12 @@ function keepAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" checked value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Single Value Column</td>';
-            markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Single Value Column</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + singleValueColumnArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -474,12 +435,12 @@ function keepAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Missing Data</td>';
-            markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Missing Data</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -496,49 +457,49 @@ function keepAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" checked value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Columns with Same Value</td>';
-            markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Columns with Same Value</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + columnsHavingSameValueArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP" checked></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
     // markup = '<tr><td colspan="4"></td></tr>';
     // $("#userAction").append(markup);
 
-    markup = '<tr><td class="text-center">Duplicate Rows</td>';
-    markup += '<td class="text-center">' + duplicateRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + duplicateRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="DR" value="DR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
-    markup = '<tr><td class="text-center">Incomplete Rows</td>';
-    markup += '<td class="text-center">' + incompleteRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Incomplete Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + incompleteRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="IR" value="IR_KEEP" checked></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE"></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
     $("#report").removeAttr("hidden");
     $("#loadingPage1").fadeTo("slow", 0);
     $("#loadingPage1").attr("hidden", true);
 
     setTimeout(function () {
-        $('#userActions').DataTable({
+        table = $('#userActions').DataTable({
             paging: true
         });
     }, 1000);
 }
 
 function removeAll(){
-    $('#userActions').DataTable().clear().destroy();
+    $('#userActions').DataTable().destroy();
     $("#loadingPage1").removeAttr("hidden");
     $("#report").attr("hidden", true);
     $("#userAction").html("");
-    $("#userActionDummy").html("");
+    // $("#userActionDummy").html("");
 
     duplicateHeaderArray = duplicateHeader;
 
@@ -550,12 +511,12 @@ function removeAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + duplicateHeaderArray[item] + item + '" checked value="' + duplicateHeaderArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Duplicate Headers</td>';
-            markup += '<td class="text-center">' + duplicateHeaderArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Headers</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + duplicateHeaderArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'KEEP"></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE" checked></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DUPLICATE' + item + '" value="' + duplicateHeaderArray[item] + 'REMOVE" checked></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -572,12 +533,12 @@ function removeAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" checked value="' + singleValueColumnArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Single Value Column</td>';
-            markup += '<td class="text-center">' + singleValueColumnArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Single Value Column</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + singleValueColumnArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'KEEP"></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE" checked></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SINGLE' + singleValueColumnArray[item] + item + '" value="' + singleValueColumnArray[item] + 'REMOVE" checked></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -595,12 +556,12 @@ function removeAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" checked value="' + res[0] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Missing Data</td>';
-            markup += '<td class="text-center">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Missing Data</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + res[0] + ' (' + res[1] + '%)</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'KEEP"></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE" checked></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="MISSING' + res[0] + item + '" value="' + res[0] + 'REMOVE" checked></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
@@ -617,48 +578,50 @@ function removeAll(){
         //     markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" checked value="' + columnsHavingSameValueArray[item] + 'REMOVE"></div></td></tr>';
         //     $("#userAction").append(markup);
         // } else {
-            markup = '<tr><td class="text-center">Columns with Same Value</td>';
-            markup += '<td class="text-center">' + columnsHavingSameValueArray[item] + '</td><td class="text-center">';
+            markup = '<tr><td class="text-center" style="width: 20%;">Columns with Same Value</td>';
+            markup += '<td class="text-center" style="width: 50%;">' + columnsHavingSameValueArray[item] + '</td><td class="text-center" style="width: 15%;">';
             markup += '<div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'KEEP"></div></td>';
-            markup += '<td class="text-center"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE" checked></div></td></tr>';
+            markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="SAME' + columnsHavingSameValueArray[item] + item + '" value="' + columnsHavingSameValueArray[item] + 'REMOVE" checked></div></td></tr>';
             $("#userAction").append(markup);
-            $("#userActionDummy").append(markup);
+            // $("#userActionDummy").append(markup);
         // }
     }
 
     // markup = '<tr><td colspan="4"></td></tr>';
     // $("#userAction").append(markup);
 
-    markup = '<tr><td class="text-center">Duplicate Rows</td>';
-    markup += '<td class="text-center">' + duplicateRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Duplicate Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + duplicateRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="DR" value="DR_KEEP"></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE" checked></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="DR" value="DR_REMOVE" checked></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
-    markup = '<tr><td class="text-center">Incomplete Rows</td>';
-    markup += '<td class="text-center">' + incompleteRowsCount + '</td><td class="text-center">';
+    markup = '<tr><td class="text-center" style="width: 20%;">Incomplete Rows</td>';
+    markup += '<td class="text-center" style="width: 50%;">' + incompleteRowsCount + '</td><td class="text-center" style="width: 15%;">';
     markup += '<div class="radio"><input type="radio" name="IR" value="IR_KEEP"></div></td>';
-    markup += '<td class="text-center"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE" checked></div></td></tr>';
+    markup += '<td class="text-center" style="width: 15%;"><div class="radio"><input type="radio" name="IR" value="IR_REMOVE" checked></div></td></tr>';
     $("#userAction").append(markup);
-    $("#userActionDummy").append(markup);
+    // $("#userActionDummy").append(markup);
 
     $("#report").removeAttr("hidden");
     $("#loadingPage1").fadeTo("slow", 0);
     $("#loadingPage1").attr("hidden", true);
 
     setTimeout(function () {
-        $('#userActions').DataTable({
+        table = $('#userActions').DataTable({
             paging: true
         });
     }, 1000);
 }
 
 function formSerialization() {
+    var data = table.$('input').serialize();
+    // $('#userActions').DataTable().clear().destroy();
     $("#loadingPage1").removeAttr("hidden");
     $("#loadingPage1").fadeTo("slow", 100);
     $("#report").attr("hidden", true);
-    eel.startCleansing($("#actionForm").serialize())(
+    eel.startCleansing(data)(
         r => fileSaved(r)
     );
 }

@@ -60,57 +60,38 @@
 						</div>
 						<!-- style="height: 550px !important; overflow-y: auto;" -->
 						<div class="col-sm-6">
-							<form id="actionForm" hidden>
-								<table id="userActionsDummy" class="table table-bordered" style="width: 95%;">
-									<thead style="background: #363636; color: #FFFFFF;">
-										<tr>
-											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
-											<th class="text-center" style="width: 50%;">Title</th>
-											<th class="text-center" style="background: #BDD7EE;">Keep</th>
-											<th class="text-center" style="background: #BDD7EE;">Remove</th>
-										</tr>
-										<!-- <tr>
-											<th class="text-center" colspan="4">User Action</th>
-										</tr> -->
-									</thead>
-									<tbody id="userActionDummy">
-										<!-- <tr>
-											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
-											<th class="text-center" style="width: 50%;">Title</th>
-											<th class="text-center" style="background: #BDD7EE;">Keep</th>
-											<th class="text-center" style="background: #BDD7EE;">Remove</th>
-										</tr> -->
-									</tbody>
-								</table>
-							</form>
-								<div class="row" style="width: 95%;">
-									<div class="col-sm-7" style="padding-top: 10px;">
-										<h6>Columns with missing rate (%) > </h6>
-									</div>
-									<div class="col-sm-3">
-										<input type="text" id="missingVal" width="100%" class="form-control" value="0">
-									</div>
-									<div class="col-sm-2">
-										<button type="button" class="btn btn-primary" onclick="regenrateMissing()">Select</button>
-									</div>
-									<br><br><br>
+							<div class="row" style="width: 95%;">
+								<div class="col-sm-7" style="padding-top: 10px;">
+									<h6>Columns with missing rate (%) > </h6>
 								</div>
-								<div class="row">
-									<div class="col-sm-6">
-										<button type="button" class="btn btn-success btn-block" onclick="keepAll()">Keep All</button>
-									</div>
-									<div class="col-sm-6">
-										<button type="button" class="btn btn-danger btn-block" onclick="removeAll()">Remove All</button>
-									</div>
-									<br><br><br>
+								<div class="col-sm-3">
+									<input type="text" id="missingVal" width="100%" class="form-control" value="0">
 								</div>
+								<div class="col-sm-2">
+									<button type="button" class="btn btn-primary"
+										onclick="regenrateMissing()">Select</button>
+								</div>
+								<br><br><br>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<button type="button" class="btn btn-success btn-block" onclick="keepAll()">Keep
+										All</button>
+								</div>
+								<div class="col-sm-6">
+									<button type="button" class="btn btn-danger btn-block" onclick="removeAll()">Remove
+										All</button>
+								</div>
+								<br><br><br>
+							</div>
+							<form id="actionForm">
 								<table id="userActions" class="table table-bordered" style="width: 95%;">
 									<thead style="background: #363636; color: #FFFFFF;">
 										<tr>
-											<th class="text-center" style="background: #F4B183;">Quality Issue</th>
+											<th class="text-center" style="width: 20%; background: #F4B183;">Quality Issue</th>
 											<th class="text-center" style="width: 50%;">Title</th>
-											<th class="text-center" style="background: #BDD7EE;">Keep</th>
-											<th class="text-center" style="background: #BDD7EE;">Remove</th>
+											<th class="text-center" style="width: 15%; background: #BDD7EE;">Keep</th>
+											<th class="text-center" style="width: 15%; background: #BDD7EE;">Remove</th>
 										</tr>
 										<!-- <tr>
 											<th class="text-center" colspan="4">User Action</th>
@@ -125,6 +106,7 @@
 										</tr> -->
 									</tbody>
 								</table>
+							</form>
 						</div>
 						<div class="col-sm-6"></div>
 						<div class="col-sm-6">

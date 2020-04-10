@@ -167,7 +167,7 @@ def startAnalyze(csv_path):
 def startCleansing(actions):
 	global dataFrame
 
-	# print(actions)
+	print(actions)
 
 	allActions = actions.split("&")
 	for item in allActions:
