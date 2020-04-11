@@ -8,6 +8,7 @@ import numpy as np
 import datetime
 
 dataFrame = ""
+columnsWithSameValue = []
 
 
 @eel.expose
@@ -72,8 +73,15 @@ def startAnalyze(csv_path):
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
 	anyValueMissingRow = len(anyValueMissingRow.axes[0])
-	columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
-	columnsHavingSameValue = list(columnsHavingSameValue.head(0))
+	mainDF = list(dataFrame.head(0))
+	for colIt in range(columns):
+		for allIt in range(columns):
+			# print(colIt)
+			if (dataFrame.iloc[:, colIt]).equals(dataFrame.iloc[:, allIt]) and colIt != allIt:
+				columnsWithSameValue.append(mainDF[colIt])
+		# print(mainDF[colIt] + " matches with " + mainDF[allIt])
+	# columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
+	# columnsHavingSameValue = list(columnsHavingSameValue.head(0))
 	# print(columnsHavingSameValue)
 	# columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
 	# if len(columnsHavingSameValue) > 0:
@@ -85,7 +93,7 @@ def startAnalyze(csv_path):
 		len(singleValueColumn)) + "\nColumn with Missing Data: " + str(
 		len(anyValueMissingColumn)) + "\nDuplicate Rows: " + str(len(duplicateRows)) + "\nIncomplete Rows: " + str(
 		anyValueMissingRow) + "\nColumns with Same Value: " + str(len(
-		columnsHavingSameValue)))
+		columnsWithSameValue)))
 
 	cellMapping = np.zeros((rows, columns))
 	for i in range(len(emptyCells)):
@@ -126,8 +134,8 @@ def startAnalyze(csv_path):
 			round((dataFrame[col].isnull().sum() / len(dataFrame[col])) * 100, 2))
 	# print(anyValueMissingColumnArray)
 
-	columnsHavingSameValueArray = [""] * len(columnsHavingSameValue)
-	for key, col in enumerate(columnsHavingSameValue):
+	columnsHavingSameValueArray = [""] * len(columnsWithSameValue)
+	for key, col in enumerate(columnsWithSameValue):
 		# print('Same value column name : ', col)
 		columnsHavingSameValueArray[key] = col
 	# print(columnsHavingSameValueArray)
@@ -151,13 +159,13 @@ def startAnalyze(csv_path):
 		'Column with Missing Data': str(len(anyValueMissingColumn)),
 		'Duplicate Rows': str(len(duplicateRows)),
 		'Incomplete Rows': str(anyValueMissingRow),
-		'Columns with Same Value': str(len(columnsHavingSameValue)),
+		'Columns with Same Value': str(len(columnsWithSameValue)),
 		'dataMap': cellMapping.tolist(),
 		'duplicateHeadMap': duplicateMapping.tolist(),
 		'duplicateHeaderArray': duplicateHeaderArray,
 		'singleValueColumnArray': singleValueColumnArray,
 		'anyValueMissingColumnArray': anyValueMissingColumnArray,
-		'columnsHavingSameValueArray': columnsHavingSameValueArray,
+		'columnsHavingSameValueArray': columnsWithSameValue,
 		'missingMapping': missingMapping.tolist()
 	}
 

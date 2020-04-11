@@ -5,6 +5,7 @@ import datetime
 import os
 
 dataFrame = ""
+columnsWithSameValue = []
 
 
 def startAnalyze(csv_path):
@@ -32,8 +33,15 @@ def startAnalyze(csv_path):
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
 	anyValueMissingRow = len(anyValueMissingRow.axes[0])
-	columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
-	columnsHavingSameValue = list(columnsHavingSameValue.head(0))
+	mainDF = list(dataFrame.head(0))
+	for colIt in range(columns):
+		for allIt in range(columns):
+			# print(colIt)
+			if (dataFrame.iloc[:, colIt]).equals(dataFrame.iloc[:, allIt]) and colIt != allIt:
+				columnsWithSameValue.append(mainDF[colIt])
+				# print(mainDF[colIt] + " matches with " + mainDF[allIt])
+	# columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
+	# columnsHavingSameValue = list(columnsHavingSameValue.head(0))
 	# print(columnsHavingSameValue)
 	# columnsHavingSameValue = [(i, j) for i, j in combinations(dataFrame, 2) if dataFrame[i].equals(dataFrame[j])]
 	# if len(columnsHavingSameValue) > 0:
@@ -45,7 +53,7 @@ def startAnalyze(csv_path):
 		len(singleValueColumn)) + "\nColumn with Missing Data: " + str(
 		len(anyValueMissingColumn)) + "\nDuplicate Rows: " + str(len(duplicateRows)) + "\nIncomplete Rows: " + str(
 		anyValueMissingRow) + "\nColumns with Same Value: " + str(len(
-		columnsHavingSameValue)))
+		columnsWithSameValue)))
 
 	cellMapping = np.zeros((rows, columns))
 	for i in range(len(emptyCells)):
@@ -63,7 +71,6 @@ def startAnalyze(csv_path):
 	# print(duplicateMapping)
 
 	duplicateHeaderArray = [""] * len(duplicateHeaderNames)
-	mainDF = list(dataFrame.head(0))
 	# print(duplicateHeaderArray)
 	for key, col in enumerate(duplicateHeaderNames):
 		# print('Duplicate header name : ', [col][0])
@@ -88,8 +95,8 @@ def startAnalyze(csv_path):
 			round((dataFrame[col].isnull().sum() / len(dataFrame[col])) * 100, 2))
 	# print(anyValueMissingColumnArray)
 
-	columnsHavingSameValueArray = [""] * len(columnsHavingSameValue)
-	for key, col in enumerate(columnsHavingSameValue):
+	columnsHavingSameValueArray = [""] * len(columnsWithSameValue)
+	for key, col in enumerate(columnsWithSameValue):
 		# print('Same value column name : ', col)
 		columnsHavingSameValueArray[key] = col
 	# print(columnsHavingSameValueArray)
@@ -197,11 +204,12 @@ def startCleansing(actions):
 	if not os.path.exists('Output'):
 		os.mkdir('Output')
 
-	dataFrame.to_csv(r'Output\\CSV_' + datetime.datetime.now().strftime("%d%m%Y%H%M%S") + '.csv', index=False, header=True)
+	dataFrame.to_csv(r'Output\\CSV_' + datetime.datetime.now().strftime("%d%m%Y%H%M%S") + '.csv', index=False,
+					 header=True)
 
 
 if __name__ == '__main__':
 	startAnalyze(
-		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV File Analyzer - Peter - PPH\\Sample Data\\100020538804102020083157.csv")
-	# startCleansing(
-	# 	"DUPLICATEsn_120=sn_12REMOVE&DUPLICATE1=sn_12.1KEEP&SINGLEsn_70=sn_7REMOVE&SINGLEsn_101=sn_10REMOVE&MISSINGsn_20=sn_2REMOVE&MISSINGsn_31=sn_3REMOVE&MISSINGsn_52=sn_5REMOVE&MISSINGsn_73=sn_7REMOVE&MISSINGsn_84=sn_8REMOVE&MISSINGsn_95=sn_9REMOVE&MISSINGsn_106=sn_10REMOVE&MISSINGsn_127=sn_12REMOVE&MISSINGsn_12.18=sn_12.1REMOVE&MISSINGsn_139=sn_13REMOVE&MISSINGsn_1610=sn_16REMOVE&SAMEsn_40=sn_4REMOVE&SAMEsn_141=sn_14REMOVE&DR=DR_REMOVE&IR=IR_REMOVE")
+		"E:\\GoogleDrive(md.rafat.hossain@g.bracu.ac.bd)\\ARRANGED\\Client Works\\People Per Hour\\CSV File Analyzer - Peter - PPH\\Sample Data\\CSV_11042020211441.csv")
+# startCleansing(
+# 	"DUPLICATEsn_120=sn_12REMOVE&DUPLICATE1=sn_12.1KEEP&SINGLEsn_70=sn_7REMOVE&SINGLEsn_101=sn_10REMOVE&MISSINGsn_20=sn_2REMOVE&MISSINGsn_31=sn_3REMOVE&MISSINGsn_52=sn_5REMOVE&MISSINGsn_73=sn_7REMOVE&MISSINGsn_84=sn_8REMOVE&MISSINGsn_95=sn_9REMOVE&MISSINGsn_106=sn_10REMOVE&MISSINGsn_127=sn_12REMOVE&MISSINGsn_12.18=sn_12.1REMOVE&MISSINGsn_139=sn_13REMOVE&MISSINGsn_1610=sn_16REMOVE&SAMEsn_40=sn_4REMOVE&SAMEsn_141=sn_14REMOVE&DR=DR_REMOVE&IR=IR_REMOVE")
