@@ -9,6 +9,7 @@ import datetime
 
 dataFrame = ""
 columnsWithSameValue = []
+fullEmptyColumns = []
 
 
 @eel.expose
@@ -49,11 +50,12 @@ def getDuplicateColumns(df):
 
 @eel.expose
 def startAnalyze(csv_path):
-	global dataFrame
+	global dataFrame, fullEmptyColumns
 	# print("Importing CSV File\n")
 	csv = pd.read_csv(csv_path, low_memory=False)
 	csv_no_head = pd.read_csv(csv_path, header=None, low_memory=False)
 	dataFrame = pd.DataFrame(csv)
+	modifiedDataFrame = pd.DataFrame(csv)
 	dataFrameNoHead = pd.DataFrame(csv_no_head)
 	rows = len(dataFrame.axes[0])
 	columns = len(dataFrame.axes[1])
@@ -61,6 +63,7 @@ def startAnalyze(csv_path):
 	emptyCellsCount = emptyCells.sum().sum()
 	missingRate = str(round((emptyCellsCount / (rows * columns)) * 100, 2))
 	fullEmptyColumns = [col for col in dataFrame.columns if dataFrame[col].isnull().all()]
+	# print(fullEmptyColumns)
 	anyValueMissingColumn = dataFrame.columns[dataFrame.isnull().any()]
 	singleValueColumnList = dataFrame.apply(pd.Series.nunique)
 	singleValueColumn = singleValueColumnList[singleValueColumnList == 1]
@@ -73,13 +76,18 @@ def startAnalyze(csv_path):
 	anyValueMissingRow = dataFrame[dataFrame.isnull().any(axis=1)]
 	anyValueMissingRow = pd.DataFrame(anyValueMissingRow)
 	anyValueMissingRow = len(anyValueMissingRow.axes[0])
-	mainDF = list(dataFrame.head(0))
-	for colIt in range(columns):
-		for allIt in range(columns):
-			# print(colIt)
-			if (dataFrame.iloc[:, colIt]).equals(dataFrame.iloc[:, allIt]) and colIt != allIt:
-				columnsWithSameValue.append(mainDF[colIt])
-		# print(mainDF[colIt] + " matches with " + mainDF[allIt])
+	for items in fullEmptyColumns:
+		# print(items)
+		modifiedDataFrame.drop(items, axis=1, inplace=True)
+	# print(modifiedDataFrame)
+	# print(dataFrame)
+	mainDF = list(modifiedDataFrame.head(0))
+	for colIt in range(len(modifiedDataFrame.axes[1])):
+		for allIt in range(colIt, len(modifiedDataFrame.axes[1])):
+			if (modifiedDataFrame.iloc[:, colIt]).equals(modifiedDataFrame.iloc[:, allIt]) and colIt != allIt:
+				if mainDF[colIt] not in columnsWithSameValue:
+					columnsWithSameValue.append(mainDF[colIt])
+	# print(mainDF[colIt] + " matches with " + mainDF[allIt])
 	# columnsHavingSameValue = dataFrame.loc[:, ~dataFrame.columns.duplicated()]
 	# columnsHavingSameValue = list(columnsHavingSameValue.head(0))
 	# print(columnsHavingSameValue)
@@ -92,8 +100,7 @@ def startAnalyze(csv_path):
 		len(duplicateHeaderNames)) + "\nSingle value column: " + str(
 		len(singleValueColumn)) + "\nColumn with Missing Data: " + str(
 		len(anyValueMissingColumn)) + "\nDuplicate Rows: " + str(len(duplicateRows)) + "\nIncomplete Rows: " + str(
-		anyValueMissingRow) + "\nColumns with Same Value: " + str(len(
-		columnsWithSameValue)))
+		anyValueMissingRow) + "\nColumns with Same Value: " + str(len(columnsWithSameValue)))
 
 	cellMapping = np.zeros((rows, columns))
 	for i in range(len(emptyCells)):
@@ -111,14 +118,15 @@ def startAnalyze(csv_path):
 	# print(duplicateMapping)
 
 	duplicateHeaderArray = [""] * len(duplicateHeaderNames)
-	mainDF = list(dataFrame.head(0))
 	# print(duplicateHeaderArray)
 	for key, col in enumerate(duplicateHeaderNames):
 		# print('Duplicate header name : ', [col][0])
-		print('Duplicate header name : ', mainDF[col])
+		# print('Duplicate header name : ', mainDF[col])
 		# print('Duplicate header name : ', columnList[col][0])
 		# duplicateHeaderArray[key] = columnList[col][0]
 		duplicateHeaderArray[key] = mainDF[col]
+	# print(duplicateHeaderArray)
+	# df.drop_duplicates(subset=['A', 'C'], keep=False) keep first / last
 
 	singleValueColumnArray = [""] * len(pd.DataFrame(singleValueColumn).axes[0])
 	# print(singleValueColumnArray)
@@ -136,7 +144,7 @@ def startAnalyze(csv_path):
 
 	columnsHavingSameValueArray = [""] * len(columnsWithSameValue)
 	for key, col in enumerate(columnsWithSameValue):
-		# print('Same value column name : ', col)
+		# print('Same value column name ' + str(key+1) + ' : ', col)
 		columnsHavingSameValueArray[key] = col
 	# print(columnsHavingSameValueArray)
 
@@ -176,9 +184,12 @@ def startAnalyze(csv_path):
 
 @eel.expose
 def startCleansing(actions):
-	global dataFrame
-
+	global dataFrame, fullEmptyColumns
 	print(actions)
+
+	for items in fullEmptyColumns:
+		# print(items)
+		dataFrame.drop(items, axis=1, inplace=True)
 
 	allActions = actions.split("&")
 	for item in allActions:
